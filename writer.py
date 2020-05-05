@@ -9,11 +9,15 @@ rest=len(aux)%100
 	#rest=len(aux)%100
 pieces = len(aux)//100
 
+def checksum256(st):
+    return functools.reduce(lambda x,y:x+y, map(ord, st)) % 256
+
 i = 0
 buffera = ""
 bufferb = ""
 bufferc = ""
-def generarTrama(i, buffera, bufferb, bufferc):
+def generarTrama(i):
+	global buffera, bufferb, bufferc
 	h = hex(i+1)
 	buffera += chr(1)+h+chr(2)+"{}".format(aux[i*100:(i+1)*100])+chr(3)+"FF"+"\n"
 	print("formato de trama")
@@ -29,17 +33,17 @@ def generarTrama(i, buffera, bufferb, bufferc):
 	print("\n")
 	print("con codigo de error")
 	temp=temp[:len(temp)-4]
-	temp=temp+str(checksum256(temp))
+	temp=temp+str(checksum256(temp)).zfill(3)+"\n"
 	bufferc+=temp
 	print(bufferc)
 
-def checksum256(st):
-    return functools.reduce(lambda x,y:x+y, map(ord, st)) % 256
+
 while(i < pieces):
-	generarTrama(i, buffera, bufferb, bufferc)
+	generarTrama(i)
 	i += 1
 if rest>0:
-	generarTrama(i, buffera, bufferb, bufferc)
+	generarTrama(i)
+
 
 f = open('DocumentoFormat.txt', "w")
 e = open('DocumentoFormatASCII.txt', "w")
