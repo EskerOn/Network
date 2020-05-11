@@ -24,10 +24,10 @@ def generarTrama(i):
 	print(buffera)
 	ascii_char=[ord(c) for c in aux[i*100:(i+1)*100]]
 	print("en ascii")
-	stringas = ""
+	stringas = " "
 	for trama in ascii_char:
-		stringas+=str(trama)
-	temp = "1"+str((int(h, 16)))+"2"+"{}".format(stringas)+"3"+str(int("0xFF", 16))+"\n"
+		stringas+=str(trama)+" "
+	temp = "1"+str((int(h, 16))).zfill(3)+"2"+"{}".format(stringas)+"3"+str(int("0xFF", 16))+"\n"
 	bufferb+=temp
 	print(bufferb)
 	print("\n")
